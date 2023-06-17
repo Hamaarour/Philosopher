@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:28:42 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/15 12:24:56 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/17 13:56:10 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,24 @@ int    ft_init(t_data *data, int ac, char **av)
 	return (0);
 	
 }
-
+/*
+	*tv_sec   : member of the time structure represents the number of seconds since 
+				the Epoch (January 1, 1970)
+	*ttv_usec : member represents the number of microseconds within the current second.
+	*Overall:
+	this function provides a simple way to obtain the current time in milliseconds 
+	using the gettimeofday function and the timeval structure.
+	
+*/
 int get_time(void)
 {
-	struct timeval time;
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	struct timeval time;// store time in sec and usec 
+	gettimeofday(&time, NULL);// get time from system 
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // return time in ms
 }
-
+/*
+	init_philo : initialise the philo struct 
+*/
 int init_philo(t_philo *philo)
 {
 	int	i;
@@ -77,7 +87,7 @@ int    start_philo(t_data *data, int ac, char **av)
 	if (ft_init(data, ac, av) == 0)
 	{
 		if (init_philo(philo))
-			return (ft_putendl_fd("error", 2),1);
+			return (ft_putendl_fd("error of initialise", 2),1);
 	}
 	return (1);
 }
