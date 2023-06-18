@@ -1,3 +1,0 @@
-    Process in C is an instance of a program that is being
-executed. It has its own memory space, program counter,
-stack, and other resources needed for execution. 

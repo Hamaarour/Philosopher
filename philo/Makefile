@@ -3,7 +3,8 @@ CC= cc
 CFLAGS= -Wall -Wextra -Werror -pthread
 RM= rm -f
 
-SRC=main.c utils.c start_philo.c\
+SRC=main.c utils.c start_philo.c check_param.c init.c\
+	time_ms.c
 	
 OBJ = $(SRC:.c=.o)
 

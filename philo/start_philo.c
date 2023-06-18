@@ -6,74 +6,62 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:28:42 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/17 13:56:10 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/18 18:29:46 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int check_param(t_data *philo)
+void	ft_print(t_philo *philo, char *str)
 {
-	if ((philo->number_of_philosophers <= 0 || philo->number_of_philosophers > 200) || 
-			(philo->time_to_die > 60) || (philo->time_to_eat > 60) || (philo->time_to_sleep > 60))
-		return (1);
-	return (0);
+	pthread_mutex_lock(philo->data->print);
+	printf("%lu {%d} %s\n", get_time() - philo->start_eat, philo->id + 1, str);
+	pthread_mutex_unlock(philo->data->print);
 }
 
-int    ft_init(t_data *data, int ac, char **av)
+void	*routine(void *arg)
 {
-	int mutex;
+	t_philo *philo;
 
-	data->number_of_philosophers = ft_atoi(av[1]);// <= 0 > 200
-	data->time_to_die = ft_atoi(av[2]);// > 60
-	data->time_to_eat = ft_atoi(av[3]);// > 60
-	data->time_to_sleep = ft_atoi(av[4]); 
-	if (ac == 6)
-		data->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
-	else
-		data->number_of_times_each_philosopher_must_eat = -42;
-	mutex = init_mutex(data);// init mutex and return 1 if error else 0 
-	if (mutex)
-		return (1);
-	if (check_param(data))
-		return (1);
-	return (0);
-	
+	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		usleep(150);
+	while (1)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		ft_print(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
+		ft_print(philo, "has taken a fork");
+		ft_print(philo, "is eating");
+		pthread_mutex_lock(&philo->death);
+		if(philo->data->number_of_times_each_philosopher_must_eat > 0)
+			philo->data->eat_count++;
+		philo->last_eat = get_time();
+		ft_print(philo, "is sleeping");
+		pthread_mutex_unlock(&philo->death);
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+		// usleep(philo->data->time_to_sleep * 1000);
+		ft_print(philo, "is thinking");
+	}
+	return (NULL);
 }
-/*
-	*tv_sec   : member of the time structure represents the number of seconds since 
-				the Epoch (January 1, 1970)
-	*ttv_usec : member represents the number of microseconds within the current second.
-	*Overall:
-	this function provides a simple way to obtain the current time in milliseconds 
-	using the gettimeofday function and the timeval structure.
-	
-*/
-int get_time(void)
+
+int start_thread(t_philo *philo)
 {
-	struct timeval time;// store time in sec and usec 
-	gettimeofday(&time, NULL);// get time from system 
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // return time in ms
-}
-/*
-	init_philo : initialise the philo struct 
-*/
-int init_philo(t_philo *philo)
-{
-	int	i;
-	int	time;
+	int i;
 
 	i = -1;
-	time = get_time();
+	philo->data->thread = (pthread_t *)malloc(sizeof(pthread_t) * philo->data->number_of_philosophers);
 	while (++i < philo->data->number_of_philosophers)
 	{
-		philo->id = i;
-		philo->start_eat = time;
-		philo->left_fork = &philo->data->forks[i];
-		philo->right_fork = &philo->data->forks[(i + 1) % philo->data->number_of_philosophers];
-		philo->data = &philo->data;
-		philo->last_eat = time;
-		if (pthread_mutex_init(&philo->death, NULL) != 0)
+		if (pthread_create(&philo->data->thread[i], NULL, &routine, philo))
+			return (1);
+	}
+	i = -1;
+	while (++i < philo->data->number_of_philosophers)
+	{
+		if (pthread_join(philo->data->thread[i], NULL) != 0)
 			return (1);
 	}
 	return (0);
@@ -84,10 +72,11 @@ int    start_philo(t_data *data, int ac, char **av)
 	t_philo *philo;
 
 	philo = (t_philo *)malloc(sizeof(t_philo));
-	if (ft_init(data, ac, av) == 0)
+	if (ft_init(data, ac, av) || init_philo(philo, data))
 	{
-		if (init_philo(philo))
-			return (ft_putendl_fd("error of initialise", 2),1);
+		ft_putendl_fd("error of initialise", 2);
+		return (free(philo), 1);
 	}
-	return (1);
+	start_thread(philo);
+	return (0);
 }
