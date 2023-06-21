@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:59 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 20:41:31 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:58:54 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 typedef struct s_data
 {
-	unsigned long				num_philo;
-	unsigned long				time_to_die;
-	unsigned long				time_to_eat;
-	unsigned long				time_to_sleep;
-	unsigned long				number_must_eatt;
+	int				num_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	long			number_must_eatt;
 }					t_data;
 
 typedef struct s_philo
@@ -36,7 +36,7 @@ typedef struct s_philo
 	size_t			start_eat;
 	size_t			last_eat;
 	int				is_eating;
-	unsigned long	eat_count;
+	size_t			eat_count;
 	pthread_t		thread;
 	pthread_mutex_t	death;
 	pthread_mutex_t	print_mutex;

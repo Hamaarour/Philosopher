@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:45 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 20:41:31 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:11:54 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	check_param(t_data data, int num)
 {
+	if (num == 6 && data.number_must_eatt <= 0)
+	{
+		ft_putendl_fd("Error: number_must_eatt", 2);
+		return (1);
+	}
 	if (data.num_philo < 0 || data.num_philo > 200)
 		return (ft_putendl_fd("Error: num_philo < 0", 2), 1);
 	if (data.time_to_die < 60)
@@ -22,10 +27,5 @@ int	check_param(t_data data, int num)
 		return (ft_putendl_fd("Error: time_to_eat ", 2), 1);
 	if (data.time_to_sleep < 60)
 		return (ft_putendl_fd("Error: time_to_sleep ", 2), 1);
-	if (num == 6 && data.number_must_eatt < 0)
-	{
-		ft_putendl_fd("Error: number_must_eatt", 2);
-		return (1);
-	}
 	return (0);
 }

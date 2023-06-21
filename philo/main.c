@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:48 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 20:41:31 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:24:54 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_data(t_data **data, int ac, char **av)
 
 void	init_mutex(pthread_mutex_t *forks, t_data *data)
 {
-	unsigned long	i;
+	int	i;
 
 	i = 0;
 	while (i < data->num_philo)
@@ -46,6 +46,8 @@ int	main(int ac, char **av)
 	t_data			*data;
 	pthread_mutex_t	*forks;
 
+	if (ac != 5 && ac != 6)
+		return (ft_putendl_fd("Error: bad arguments", 2), 1);
 	data = malloc(sizeof(t_data));
 	if (init_data(&data, ac, av) == 1)
 		return (printf("Error: bad arguments\n"), 1);
@@ -54,12 +56,7 @@ int	main(int ac, char **av)
 	philo = malloc(sizeof(t_philo) * data->num_philo);
 	if (!philo)
 		return (ft_putendl_fd("Error: malloc failed", 2), 1);
-	if (ac >= 5 || ac < 7)
-	{
-		if (start_philo(philo, data, forks) == 1)
-			return (ft_putendl_fd("Error: bad arguments", 2), 1);
-	}
-	else
-		ft_putendl_fd("Error: bad arguments", 2);
+	if (start_philo(philo, data, forks) == 1)
+		return (ft_putendl_fd("Error: bad arguments", 2), 1);
 	return (0);
 }

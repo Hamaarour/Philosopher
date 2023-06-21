@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:28:42 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 20:41:53 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:16:54 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,20 @@ void	*routine(void *arg)
 
 void	check_death(t_philo *philo)
 {
-	unsigned long	i;
+	int	i;
 
 	i = 0;
 	while (i < philo->data->num_philo)
 	{
 		if (philo->data->number_must_eatt > 0
 			&& philo->eat_count
-			== philo->data->number_must_eatt)
+			== (size_t)philo->data->number_must_eatt)
 		{
 			pthread_mutex_unlock(&philo->print_mutex);
 			return ;
 		}
-		if (get_time() - philo[i].last_eat > philo->data->time_to_die)
+		if (get_time() - (long)philo[i].last_eat
+			> (long)philo->data->time_to_die)
 		{
 			pthread_mutex_lock(&philo->print_mutex);
 			printf("\033[0;31m%lu {%d} died\033[1;0m\n",
@@ -78,7 +79,7 @@ void	check_death(t_philo *philo)
 
 int	start_thread(t_philo *philo)
 {
-	unsigned long	i;
+	int	i;
 
 	i = 0;
 	while (i < philo->data->num_philo)

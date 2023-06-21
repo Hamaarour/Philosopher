@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:33 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 20:41:31 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:13:36 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_init(t_philo *philo, t_data *data, pthread_mutex_t *forks)
 {
-	unsigned long	i;
+	int				i;
 	pthread_mutex_t	*print;
 
 	i = 0;
