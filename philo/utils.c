@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:40:13 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/11 09:44:26 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:34:30 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_atoi(const char *str)
 		return (0);
 	return (res * n);
 }
+
 int	ft_strlen(const char *s)
 {
 	int	i;
@@ -47,6 +48,7 @@ int	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
 void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
