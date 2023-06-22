@@ -1,6 +1,6 @@
 NAME= philo
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -pthread #-g3 -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -pthread #-g3 -fsanitize=thread
 RM= rm -f
 
 SRC=main.c utils.c start_philo.c check_param.c init.c\

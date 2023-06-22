@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:59 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 21:58:54 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:50:31 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ typedef struct s_philo
 	size_t			last_eat;
 	int				is_eating;
 	size_t			eat_count;
+	size_t			overeat;
 	pthread_t		thread;
 	pthread_mutex_t	death;
+	pthread_mutex_t	*eat;
+	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	last_eat_mutex;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*forks;
@@ -47,9 +51,11 @@ typedef struct s_philo
 // +++++ Check +++++
 int		check_param(t_data philo, int num);
 // +++++ init +++++
-int		ft_init(t_philo *philo, t_data *data, pthread_mutex_t *forks);
+int		ft_init(t_philo *philo, t_data *data,
+			pthread_mutex_t *forks);
 // +++++ Start +++++
-int		start_philo(t_philo *philo, t_data *data, pthread_mutex_t *forks);
+int		start_philo(t_philo *philo, t_data *data,
+			pthread_mutex_t *forks);
 // +++++ Utils +++++
 long	get_time(void);
 void	ft_getsleep(long time);

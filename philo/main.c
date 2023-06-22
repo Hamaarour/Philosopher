@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:48 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 22:24:54 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:51:27 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ void	init_mutex(pthread_mutex_t *forks, t_data *data)
 			ft_putendl_fd("Error: mutex flaid", 2);
 		i++;
 	}
+}
+
+void	main_destroy(t_philo *philo, t_data *data, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(&philo->death);
+		pthread_mutex_destroy(&philo->print_mutex);
+		i++;
+	}
+	free(philo);
+	free(data);
+	free(forks);
 }
 
 int	main(int ac, char **av)

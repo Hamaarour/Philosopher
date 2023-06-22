@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:34:33 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/21 22:13:36 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:51:43 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ft_init(t_philo *philo, t_data *data, pthread_mutex_t *forks)
 
 	i = 0;
 	print = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(print, NULL);
-	if (pthread_mutex_init(&philo->death, NULL) != 0
-		|| pthread_mutex_init(&philo->print_mutex, NULL) != 0)
+	if (pthread_mutex_init(print, NULL) != 0
+		|| pthread_mutex_init(&philo->print_mutex, NULL) != 0
+		|| pthread_mutex_init(&philo->eat_mutex, NULL) != 0)
 		return (1);
 	while (i < data->num_philo)
 	{
@@ -30,9 +30,11 @@ int	ft_init(t_philo *philo, t_data *data, pthread_mutex_t *forks)
 		philo[i].is_eating = 0;
 		philo[i].last_eat = get_time();
 		philo[i].eat_count = 0;
+		philo[i].eat_count = 0;
 		philo[i].data = data;
 		philo[i].forks = forks;
 		philo[i].print = print;
+		philo[i].eat_mutex = philo->eat_mutex;
 		i++;
 	}
 	return (0);
