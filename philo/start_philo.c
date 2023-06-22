@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 13:28:42 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/22 18:11:54 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:16:21 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_print(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(philo->print);
-	// dprintf(2, "here ===============> %p\n", philo->print);
 	printf("%lu {%d} %s\n", get_time() - philo->start_eat, philo->id, str);
 	pthread_mutex_unlock(philo->print);
 }
@@ -57,14 +56,17 @@ void	check_death(t_philo *philo)
 	while (i < philo->data->num_philo)
 	{
 		pthread_mutex_lock(&philo[i].eat_mutex);
-		if (philo->data->number_must_eatt > 0 && philo[i].eat_count >= (size_t)philo->data->number_must_eatt)
+		if (philo->data->number_must_eatt > 0 && philo[i].eat_count
+			>= (size_t)philo->data->number_must_eatt)
 		{
 			return ;
 		}
-		if (get_time() - (long)philo[i].last_eat > (long)philo->data->time_to_die)
+		if (get_time() - (long)philo[i].last_eat
+			> (long)philo->data->time_to_die)
 		{
 			pthread_mutex_lock(philo->print);
-			printf("\033[0;31m%lu {%d} died\033[1;0m\n", get_time() - philo[i].last_eat, philo->id);
+			printf("\033[0;31m%lu {%d} died\033[1;0m\n",
+				get_time() - philo->start_eat, philo->id);
 			return ;
 		}
 		i++;
