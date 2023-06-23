@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:59 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/22 16:50:31 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/23 01:09:21 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int		start_philo(t_philo *philo, t_data *data,
 // +++++ Utils +++++
 long	get_time(void);
 void	ft_getsleep(long time);
+int		global_eat(int *arr, int n);
+void	array_of_ints(int *arr, int n);
+void	ft_print(t_philo *philo, char *str);
 // +++++ utils-functions +++++
 int		ft_strlen(const char *str);
 void	ft_putendl_fd(char *s, int fd);

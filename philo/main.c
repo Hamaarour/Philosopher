@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:19:48 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/22 16:51:27 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/23 00:58:59 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,40 @@ void	main_destroy(t_philo *philo, t_data *data, pthread_mutex_t *forks)
 	free(forks);
 }
 
+int	check(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (av[i][j] == '+' && j == 0)
+				j++;
+			if (av[i][j] < '0' || av[i][j] > '9')
+				return (EXIT_FAILURE);
+			j++;
+		}
+		if ((ft_atoi(av[i]) < 60 && i > 1 && i < 5) || ft_atoi(av[i]) < 0
+			|| (av[i][0] == '\0' && i < 5) || !av[i] || !ft_atoi(av[1]))
+			return (EXIT_FAILURE);
+		i++;
+	}
+	if (i < 5)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
 int	main(int ac, char **av)
 {
 	t_philo			*philo;
 	t_data			*data;
 	pthread_mutex_t	*forks;
 
-	if (ac != 5 && ac != 6)
+	if ((ac != 5 && ac != 6) || check(ac, av) == EXIT_FAILURE)
 		return (ft_putendl_fd("Error: bad arguments", 2), 1);
 	data = malloc(sizeof(t_data));
 	if (init_data(&data, ac, av) == 1)

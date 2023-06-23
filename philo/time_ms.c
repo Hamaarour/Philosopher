@@ -6,7 +6,7 @@
 /*   By: hamaarou <hamaarou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:33:18 by hamaarou          #+#    #+#             */
-/*   Updated: 2023/06/22 18:10:55 by hamaarou         ###   ########.fr       */
+/*   Updated: 2023/06/23 00:25:47 by hamaarou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,28 @@ void	ft_getsleep(long time)
 	begin = get_time();
 	while (get_time() - begin < time)
 		usleep(150);
+}
+
+void	array_of_ints(int *arr, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		arr[i] = 0;
+		i++;
+	}
+}
+
+int	global_eat(int *arr, int n)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] == 1)
+		i++;
+	if (i == n)
+		return (1);
+	return (0);
 }
