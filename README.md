@@ -122,7 +122,7 @@ Note that mutexes are just one type of synchronization primitive available in C 
 ### h
 
 The reason you cannot create threads and join them in the same loop is that the pthread_join() function blocks until the specified thread terminates. If you create all the threads in a loop and then immediately join them in the same loop, the execution will be blocked until the first thread finishes, preventing the creation of subsequent threads.
-
+<https://www.youtube.com/watch?v=8Sv7D4DUB_4&t=3s>[arabic]
 <https://www.youtube.com/watch?v=NbwbQQB7xNQ>
 <https://www.youtube.com/watch?v=trdXKhWAGdg>
 <https://www.notion.so/Philosophers-2b872948598e4f0cba91c66d8b5ba821>
